@@ -37,7 +37,7 @@ const App = () =>{
 
 //setting up the Headers
 const allheader = () =>{
-  const header = ['Gender', 'Email', 'Name', 'Picture']
+  const header = ['Gender', 'Email', 'Name','City', 'State', 'Picture']
   return header.map((headers,index) =>{
     return (
       <th key={index}>{headers.toUpperCase()}</th>
@@ -66,20 +66,25 @@ const allheader = () =>{
               </thead>
 
               <tbody>              
-                 {userData.slice(pageVisit, pageVisit + userPerPage).filter((data) =>{
-                    //console.log(data)
-                     if(searchItem == "")
-                        return data
-                     else if(data.email.toLowerCase().includes(searchItem.toLocaleLowerCase())){
-                        return data
-                      }
-                 }).map(({gender,email,name,picture}) =>{
+                 {userData.slice(pageVisit, pageVisit + userPerPage)
+                          .filter((data) =>{
+                            //console.log(data)
+                             if(searchItem == "")
+                                 return data
+                             else if(data.email.toLowerCase().includes(searchItem.toLowerCase())){
+                                 return data
+                           }else if(data.name.first.toLowerCase().includes(searchItem.toLowerCase())){
+                             return data
+                           }
+                        }).map(({gender,email,name,location,picture}) =>{
    
                     return(
                          <tr>
                          <td>{gender}</td>
                          <td>{email}</td>
-                         <td>{name.first}{name.last}</td>
+                         <td>{name.first} {name.last}</td>
+                         <td>{location.city}</td>
+                         <td>{location.state}</td>
                          <td><img src={picture.medium} /></td>
                          </tr>
                         )
